@@ -123,9 +123,18 @@ IIFE stands for Immediately Invoked Function Expressions. The JavaScript parser 
 
 Here are two ways to fix it that involves adding more brackets: `(function foo(){ })()` and `(function foo(){ }())`. These functions are not exposed in the global scope and you can even omit its name if you do not need to reference itself within the body.
 
+You might also use `void` operator: `void function foo(){ }();`. Unfortunately, there is one issue with such approach. The evaluation of given expression is always `undefined`, so if your IIFE function returns anything, you can't use it. An example:
+
+```js
+const foo = void function bar() { return 'foo'; }();
+
+console.log(foo); // undefined
+```
+
 ###### References
 
 * http://lucybain.com/blog/2014/immediately-invoked-function-expression/
+* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/void
 
 [[↑] Back to top](#js-questions)
 
@@ -682,7 +691,7 @@ I would not advise you to write the above during interviews though. Just stick w
 
 ### Why is it, in general, a good idea to leave the global scope of a website as-is and never touch it?
 
-Every script has access to the global scope, and if everyone is using the global namespace to define their own variables, there will bound to be collisions. Use the module pattern (IIFEs) to encapsulate your variables within a local namespace.
+Every script has access to the global scope, and if everyone uses the global namespace to define their variables, collisions will likely occur. Use the module pattern (IIFEs) to encapsulate your variables within a local namespace.
 
 [[↑] Back to top](#js-questions)
 
